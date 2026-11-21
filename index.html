@@ -8,8 +8,8 @@
     <meta name="author" content="Alok Awasthi" />
     <link rel="canonical" href="https://portfolio-awasthi.netlify.app/" />
     <link rel="icon" href="/mypic.ico" />
-    <meta name="theme-color" content="#0b0b10" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#fafaf9" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#13100e" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f6f1e8" media="(prefers-color-scheme: light)" />
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Alok Awasthi | Senior Software Engineer" />
@@ -38,11 +38,12 @@
     <script>
       (function () {
         try {
+          var ok = { ember: 1, forest: 1, rose: 1, paper: 1, mono: 1 };
           var t = localStorage.getItem('theme');
-          if (!t) t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+          if (!ok[t]) t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'paper' : 'ember';
           document.documentElement.dataset.theme = t;
         } catch (e) {
-          document.documentElement.dataset.theme = 'dark';
+          document.documentElement.dataset.theme = 'ember';
         }
       })();
     </script>

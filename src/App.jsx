@@ -7,8 +7,6 @@ import {
   FiMail,
   FiMapPin,
   FiMenu,
-  FiMoon,
-  FiSun,
   FiX,
 } from 'react-icons/fi';
 
@@ -70,22 +68,39 @@ function useActiveSection() {
   return active;
 }
 
-function ThemeToggle() {
-  const [theme, setTheme] = useState(() => document.documentElement.dataset.theme || 'dark');
-  const toggle = () => {
-    const next = theme === 'dark' ? 'light' : 'dark';
-    setTheme(next);
-    document.documentElement.dataset.theme = next;
+const THEMES = [
+  { id: 'ember', label: 'Ember', bg: '#13100e', a: '#ff7a45', b: '#ffc94a' },
+  { id: 'forest', label: 'Forest', bg: '#0c1310', a: '#34d399', b: '#d4f45c' },
+  { id: 'rose', label: 'Rose', bg: '#150e13', a: '#ff5c9a', b: '#ffb38a' },
+  { id: 'paper', label: 'Paper', bg: '#f6f1e8', a: '#c2410c', b: '#b7791f' },
+  { id: 'mono', label: 'Mono', bg: '#f5f5f4', a: '#111111', b: '#e11d48' },
+];
+
+function ThemePicker() {
+  const [theme, setTheme] = useState(() => document.documentElement.dataset.theme || 'ember');
+  const choose = (id) => {
+    setTheme(id);
+    document.documentElement.dataset.theme = id;
     try {
-      localStorage.setItem('theme', next);
+      localStorage.setItem('theme', id);
     } catch (e) {
       /* storage unavailable: theme still applies for this visit */
     }
   };
   return (
-    <button className="icon-btn" onClick={toggle} aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}>
-      {theme === 'dark' ? <FiSun /> : <FiMoon />}
-    </button>
+    <div className="themes" role="group" aria-label="Colour theme">
+      {THEMES.map((t) => (
+        <button
+          key={t.id}
+          type="button"
+          data-label={t.label}
+          aria-label={`${t.label} theme`}
+          aria-pressed={theme === t.id}
+          onClick={() => choose(t.id)}
+          style={{ '--sw-a': t.a, '--sw-b': t.b, '--sw-bg': t.bg }}
+        />
+      ))}
+    </div>
   );
 }
 
@@ -129,7 +144,7 @@ export function Nav({ activeOverride }) {
           </a>
         </nav>
         <div className="nav__actions">
-          <ThemeToggle />
+          <ThemePicker />
           <button
             className="icon-btn nav__menu"
             onClick={() => setOpen((o) => !o)}
