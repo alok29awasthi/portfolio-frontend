@@ -33,10 +33,10 @@ export const experience = [
     period: 'Dec 2025 – Present',
     location: 'Bangalore',
     points: [
-      'Building GenAI features for healthcare payer data, including LLM-based entity resolution that catches duplicate records rule-based matching misses, with human review where confidence is low.',
-      'Delivered a retrieval-augmented generation (RAG) pipeline that extracts structured rules from payer documents, with LLM-based evaluation and human-in-the-loop review.',
-      'Designed data models that bring several inconsistent payer data sources together, and built Python tooling to migrate SQL ETL pipelines with automated validation.',
-      'Built internal tools with role-based access and per-team data isolation, so teams manage their own users without developer help.',
+      'Cut manual duplicate review by ~70% with LLM-based entity resolution for healthcare payer data, catching matches rule-based logic misses, with human review where confidence is low.',
+      'Delivered a retrieval-augmented generation (RAG) pipeline that extracts structured rules from payer documents, cutting manual document review time by ~30%.',
+      'Designed a data model that brings 5 inconsistent payer data sources together, and built Python tooling that cut ETL migration validation time by ~50%.',
+      'Built internal tools with role-based access and per-team data isolation, taking ~90% of access requests off developers.',
     ],
     tags: ['Java', 'Python', 'Oracle DB', 'GenAI', 'RAG', 'REST APIs'],
   },
@@ -84,13 +84,6 @@ export const projects = [
       'File storage and sharing backend with user auth, AWS S3 storage, metadata tracking and grant/revoke access control. Downloads go through a backend proxy so no public S3 links are ever exposed.',
     tags: ['Spring Boot 3', 'AWS S3', 'PostgreSQL', 'JWT'],
     links: [{ label: 'GitHub', href: 'https://github.com/alok29awasthi/share-doc' }],
-  },
-  {
-    name: 'Weekly Timetable Builder',
-    description:
-      'Upload a class-schedule spreadsheet, tick your courses and sections, and get a personal day-by-day timetable. Parsed entirely in the browser, with picks saved as a short code: no accounts, no server.',
-    tags: ['JavaScript', 'Client-side', 'Privacy-first'],
-    links: [{ label: 'GitHub', href: 'https://github.com/alok29awasthi/tt-builder' }],
   },
   {
     name: 'Word Lookup Extension',
