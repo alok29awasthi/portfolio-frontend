@@ -13,7 +13,7 @@ export const profile = {
   intro:
     'Senior Member of Technical Staff at Oracle Health with 5+ years across healthcare, financial services and travel. I work mostly in Java, Spring Boot, Python, SQL and Oracle DB.',
   about: [
-    "Right now I'm driving payer data platforms and GenAI features at Oracle Health: an LLM-based process that deduplicates payer records, a RAG pipeline that pulls prior-authorization rules out of payer documents, and self-onboarding that lets payers set themselves up across teams.",
+    "At Oracle Health I work on payer data platforms and GenAI features: using LLMs to clean up and match messy healthcare records, pulling structured rules out of documents with retrieval-augmented generation, and building the data models and tooling underneath.",
     'Before that I spent three years at Morgan Stanley building regulatory reporting and event-processing systems, and started out at OYO building booking data pipelines and getting test coverage from 19% to 72%.',
     'I care about systems that are measurable and boring to operate: clear data models, automated validation, solid test suites and deployments you can roll back. I also enjoy mentoring and owning delivery across teams.',
   ],
@@ -33,14 +33,12 @@ export const experience = [
     period: 'Dec 2025 – Present',
     location: 'Bangalore',
     points: [
-      'Drove LLM-based entity resolution for payer deduplication on OCI Generative AI, catching duplicates rule-based matching misses (“BCBS” vs “Blue Cross Blue Shield”) across thousands of records, with human review of low-confidence matches.',
-      'Drove delivery of a RAG pipeline that extracts prior-authorization and timely-filing rules from payer PDFs: curated crawling, parsing, chunking, vector embeddings and scheduled GenAI evaluators that auto-approve evidence-backed documents.',
-      'Designed a unified payer data model in Oracle DB consolidating 5 sources (500–2,500 payers each) across eligibility, prior authorization, CRD and DTR workflows; 5 more in progress.',
-      'Leading design of payer self-onboarding across Payer Directory and Payer Hub: OCI IAM Identity Domain provisioning, REST APIs that prefill profiles, and human-in-the-loop approval.',
-      'Built the Payer Directory management console in Oracle APEX with 4-tier role-based access and per-workflow data isolation.',
-      'Built Python tooling to migrate multi-step SQL ETL pipelines to Oracle DB with automated validation (row counts, aggregates, row-level diffs).',
+      'Building GenAI features for healthcare payer data, including LLM-based entity resolution that catches duplicate records rule-based matching misses, with human review where confidence is low.',
+      'Delivered a retrieval-augmented generation (RAG) pipeline that extracts structured rules from payer documents, with LLM-based evaluation and human-in-the-loop review.',
+      'Designed data models that bring several inconsistent payer data sources together, and built Python tooling to migrate SQL ETL pipelines with automated validation.',
+      'Built internal tools with role-based access and per-team data isolation, so teams manage their own users without developer help.',
     ],
-    tags: ['Java', 'Python', 'Oracle DB', 'OCI Generative AI', 'RAG', 'Oracle APEX', 'REST APIs'],
+    tags: ['Java', 'Python', 'Oracle DB', 'GenAI', 'RAG', 'REST APIs'],
   },
   {
     company: 'Morgan Stanley',
@@ -49,7 +47,7 @@ export const experience = [
     location: 'Bangalore',
     points: [
       'Built a modular regulatory reporting framework producing regime-specific outputs with no downstream logic changes, cutting onboarding effort by 30%+ across 5+ regimes.',
-      'Cut event processing time from 2s to 1.2s and tripled throughput through parallel processing, clearing backlogs of 3,700+ events within SLA.',
+      'Cut event processing time from 2s to 1.2s and tripled throughput through parallel processing, clearing backlogs within SLA.',
       'Built automated test frameworks (unit, API contract, BDD-based E2E), cutting testing cycle time by ~20%, or 2 days per release.',
       'Brought Blue-Green deployments into Jenkins pipelines for safer releases and rollbacks; mentored junior developers on design patterns and automation.',
     ],
