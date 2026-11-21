@@ -387,22 +387,29 @@ function ClassicSite() {
   );
 }
 
-// The page-turning book needs room for each page to fit on screen; smaller
-// screens and reduced-motion users get the regular scrolling site.
-const BOOK_QUERY = '(min-width: 960px) and (min-height: 680px) and (prefers-reduced-motion: no-preference)';
+// The book needs room for two portrait pages; phones, very small windows and
+// reduced-motion users get the regular scrolling site. "Simple view" in the
+// book switches to the scrolling site for the rest of the visit.
+const BOOK_QUERY = '(min-width: 720px) and (min-height: 540px) and (prefers-reduced-motion: no-preference)';
 
-function useMedia(query) {
-  const [match, setMatch] = useState(() => window.matchMedia(query).matches);
-  useEffect(() => {
-    const mq = window.matchMedia(query);
-    const on = () => setMatch(mq.matches);
-    mq.addEventListener('change', on);
-    return () => mq.removeEventListener('change', on);
-  }, [query]);
-  return match;
+function wantsBook() {
+  try {
+    if (sessionStorage.getItem('view') === 'simple') return false;
+  } catch (e) {
+    /* storage unavailable */
+  }
+  return window.matchMedia(BOOK_QUERY).matches;
 }
 
 export default function App() {
-  const book = useMedia(BOOK_QUERY);
+  const [book] = useState(wantsBook);
+  useEffect(() => {
+    const mq = window.matchMedia(BOOK_QUERY);
+    const onChange = () => {
+      if (mq.matches !== book) window.location.reload();
+    };
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, [book]);
   return book ? <Book /> : <ClassicSite />;
 }
