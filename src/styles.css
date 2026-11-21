@@ -892,3 +892,39 @@ textarea {
   display: block;
   padding-bottom: 0.08em;
 }
+
+/* ---------- Scroll-drawn line ---------- */
+.scroll-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: visible;
+}
+.scroll-line__path,
+.scroll-line__glow {
+  fill: none;
+  stroke: url(#sl-grad);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 0 999999;
+}
+.scroll-line__path {
+  stroke-width: 2;
+}
+.scroll-line__glow {
+  stroke-width: 8;
+  opacity: 0.28;
+  filter: blur(6px);
+}
+.scroll-line__dot {
+  fill: var(--accent-2);
+  opacity: 0;
+  filter: drop-shadow(0 0 6px var(--accent-2)) drop-shadow(0 0 14px var(--accent));
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-line {
+    display: none;
+  }
+}

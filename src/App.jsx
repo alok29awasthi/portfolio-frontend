@@ -15,7 +15,7 @@ import {
 import photo from './assets/mypic.jpeg';
 import { education, experience, profile, projects, skills, stats } from './data.js';
 import Contact from './Contact.jsx';
-import Book from './Book.jsx';
+import ScrollLine from './ScrollLine.jsx';
 
 export const SECTIONS = [
   { id: 'about', label: 'About' },
@@ -374,6 +374,7 @@ function ClassicSite() {
         Skip to content
       </a>
       <Nav />
+      <ScrollLine />
       <main>
         <Hero />
         <About />
@@ -387,29 +388,4 @@ function ClassicSite() {
   );
 }
 
-// The book needs room for two portrait pages; phones, very small windows and
-// reduced-motion users get the regular scrolling site. "Simple view" in the
-// book switches to the scrolling site for the rest of the visit.
-const BOOK_QUERY = '(min-width: 720px) and (min-height: 540px) and (prefers-reduced-motion: no-preference)';
-
-function wantsBook() {
-  try {
-    if (sessionStorage.getItem('view') === 'simple') return false;
-  } catch (e) {
-    /* storage unavailable */
-  }
-  return window.matchMedia(BOOK_QUERY).matches;
-}
-
-export default function App() {
-  const [book] = useState(wantsBook);
-  useEffect(() => {
-    const mq = window.matchMedia(BOOK_QUERY);
-    const onChange = () => {
-      if (mq.matches !== book) window.location.reload();
-    };
-    mq.addEventListener('change', onChange);
-    return () => mq.removeEventListener('change', onChange);
-  }, [book]);
-  return book ? <Book /> : <ClassicSite />;
-}
+export default ClassicSite;
