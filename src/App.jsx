@@ -1,11 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { FiArrowUpRight, FiGithub, FiLinkedin, FiMail, FiMoon, FiSun } from 'react-icons/fi';
+import {
+  FiArrowUpRight,
+  FiDownload,
+  FiGithub,
+  FiLinkedin,
+  FiMail,
+  FiMapPin,
+  FiMenu,
+  FiMoon,
+  FiSun,
+  FiX,
+} from 'react-icons/fi';
 
 import photo from './assets/mypic.jpeg';
 import { education, experience, profile, projects, skills, stats } from './data.js';
 import Contact from './Contact.jsx';
+import Book from './Book.jsx';
 
-const SECTIONS = [
+export const SECTIONS = [
   { id: 'about', label: 'About' },
   { id: 'experience', label: 'Experience' },
   { id: 'projects', label: 'Projects' },
@@ -13,13 +25,41 @@ const SECTIONS = [
   { id: 'contact', label: 'Contact' },
 ];
 
-// Highlight the nav entry for the section currently on screen.
+// Fade sections in as they scroll into view.
+function useReveal() {
+  useEffect(() => {
+    const els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) {
+      els.forEach((el) => el.classList.add('is-visible'));
+      return undefined;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-visible');
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+}
+
+// Highlight the nav link for the section currently on screen.
 function useActiveSection() {
-  const [active, setActive] = useState('about');
+  const [active, setActive] = useState('');
   useEffect(() => {
     const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => e.isIntersecting && setActive(e.target.id)),
-      { rootMargin: '-35% 0px -60% 0px' }
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) setActive(e.target.id);
+        });
+      },
+      { rootMargin: '-45% 0px -50% 0px' }
     );
     SECTIONS.forEach(({ id }) => {
       const el = document.getElementById(id);
@@ -31,7 +71,7 @@ function useActiveSection() {
 }
 
 function ThemeToggle() {
-  const [theme, setTheme] = useState(() => document.documentElement.dataset.theme || 'light');
+  const [theme, setTheme] = useState(() => document.documentElement.dataset.theme || 'dark');
   const toggle = () => {
     const next = theme === 'dark' ? 'light' : 'dark';
     setTheme(next);
@@ -39,52 +79,93 @@ function ThemeToggle() {
     try {
       localStorage.setItem('theme', next);
     } catch (e) {
-      /* storage unavailable: the theme still applies for this visit */
+      /* storage unavailable: theme still applies for this visit */
     }
   };
   return (
-    <button className="theme" onClick={toggle} aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}>
-      {theme === 'dark' ? <FiSun aria-hidden="true" /> : <FiMoon aria-hidden="true" />}
-      <span>{theme === 'dark' ? 'Light' : 'Dark'}</span>
+    <button className="icon-btn" onClick={toggle} aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}>
+      {theme === 'dark' ? <FiSun /> : <FiMoon />}
     </button>
   );
 }
 
-function Sidebar() {
-  const active = useActiveSection();
+export function Nav({ activeOverride }) {
+  const observed = useActiveSection();
+  const active = activeOverride ?? observed;
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : '';
+  }, [open]);
+
   return (
-    <header className="side">
-      <div className="side__top">
-        <img className="side__photo" src={photo} alt="Portrait of Alok Awasthi" width="406" height="406" />
-        <h1 className="side__name">Alok Awasthi</h1>
-        <p className="side__role">
-          {profile.role} at <span className="nowrap">{profile.company}</span>
-        </p>
-        <p className="side__pitch">
-          I build backend, data and <em>GenAI</em> systems that hold up in production.
-        </p>
-
-        <nav className="side__nav" aria-label="Sections">
-          <ol>
-            {SECTIONS.map(({ id, label }, i) => (
-              <li key={id}>
-                <a href={`#${id}`} className={active === id ? 'is-active' : ''} aria-current={active === id ? 'true' : undefined}>
-                  <span className="side__nav-num">{String(i + 1).padStart(2, '0')}</span>
-                  <span className="side__nav-line" aria-hidden="true" />
-                  <span>{label}</span>
-                </a>
-              </li>
-            ))}
-          </ol>
-        </nav>
-      </div>
-
-      <div className="side__bottom">
-        <a className="side__resume" href={profile.resume} download>
-          Download résumé <FiArrowUpRight aria-hidden="true" />
+    <header className={`nav ${scrolled ? 'nav--scrolled' : ''}`}>
+      <div className="container nav__inner">
+        <a href="#top" className="nav__brand" onClick={() => setOpen(false)}>
+          <span className="nav__mark">AA</span>
+          <span className="nav__name">Alok Awasthi</span>
         </a>
-        <div className="side__row">
-          <ul className="side__social" aria-label="Profiles">
+        <nav className={`nav__links ${open ? 'is-open' : ''}`} aria-label="Primary">
+          {SECTIONS.map(({ id, label }) => (
+            <a
+              key={id}
+              href={`#${id}`}
+              className={active === id ? 'is-active' : ''}
+              onClick={() => setOpen(false)}
+            >
+              {label}
+            </a>
+          ))}
+          <a className="btn btn--primary btn--sm nav__cta" href={profile.resume} download>
+            Resume <FiDownload aria-hidden="true" />
+          </a>
+        </nav>
+        <div className="nav__actions">
+          <ThemeToggle />
+          <button
+            className="icon-btn nav__menu"
+            onClick={() => setOpen((o) => !o)}
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}
+          >
+            {open ? <FiX /> : <FiMenu />}
+          </button>
+        </div>
+      </div>
+    </header>
+  );
+}
+
+export function Hero() {
+  return (
+    <section className="hero" id="top">
+      <div className="container hero__inner">
+        <div className="hero__text">
+          <p className="eyebrow">
+            <span className="status-dot" aria-hidden="true" /> {profile.role} · {profile.company}
+          </p>
+          <h1>
+            Hi, I'm Alok.
+            <span className="gradient-text hero__tagline">{profile.tagline}</span>
+          </h1>
+          <p className="hero__intro">{profile.intro}</p>
+          <div className="hero__cta">
+            <a className="btn btn--primary" href="#contact">
+              Get in touch
+            </a>
+            <a className="btn btn--ghost" href={profile.resume} download>
+              <FiDownload aria-hidden="true" /> Download resume
+            </a>
+          </div>
+          <ul className="socials" aria-label="Profiles">
             <li>
               <a href={profile.github} target="_blank" rel="noreferrer noopener" aria-label="GitHub">
                 <FiGithub />
@@ -100,153 +181,228 @@ function Sidebar() {
                 <FiMail />
               </a>
             </li>
+            <li className="socials__loc">
+              <FiMapPin aria-hidden="true" /> {profile.location}
+            </li>
           </ul>
-          <ThemeToggle />
+        </div>
+        <div className="hero__photo">
+          <div className="hero__photo-ring">
+            <img src={photo} alt="Portrait of Alok Awasthi" width="406" height="406" />
+          </div>
         </div>
       </div>
-    </header>
-  );
-}
 
-function Section({ id, title, children }) {
-  return (
-    <section id={id} className="sec" aria-labelledby={`${id}-title`}>
-      <h2 id={`${id}-title`} className="sec__title">
-        {title}
-      </h2>
-      {children}
+      <div className="container">
+        <dl className="stats reveal">
+          {stats.map((s) => (
+            <div className="stat" key={s.label}>
+              <dt>{s.value}</dt>
+              <dd>{s.label}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
     </section>
   );
 }
 
-function About() {
+function SectionHeading({ index, title, kicker }) {
   return (
-    <Section id="about" title="About">
-      <div className="prose">
-        {profile.about.map((p, i) => (
-          <p key={p.slice(0, 24)} className={i === 0 ? 'lede' : ''}>
-            {p}
-          </p>
-        ))}
-      </div>
-
-      <dl className="impact">
-        {stats.map((s) => (
-          <div key={s.label}>
-            <dt>{s.value}</dt>
-            <dd>{s.label}</dd>
-          </div>
-        ))}
-      </dl>
-    </Section>
+    <div className="section__head">
+      <span className="section__index">{index}</span>
+      <h2>{title}</h2>
+      {kicker && <p className="section__kicker">{kicker}</p>}
+    </div>
   );
 }
 
-function Experience() {
+export function About() {
   return (
-    <Section id="experience" title="Experience">
-      <ol className="rows">
-        {experience.map((job) => (
-          <li className="row" key={job.company}>
-            <p className="row__date">{job.period}</p>
-            <div className="row__body">
-              <h3 className="row__title">
-                {job.company}
-                <span className="row__sub">{job.role}</span>
-              </h3>
-              <ul className="row__points">
-                {job.points.map((pt) => (
-                  <li key={pt.slice(0, 32)}>{pt}</li>
+    <section className="section" id="about">
+      <div className="container reveal">
+        <SectionHeading index="01" title="About" />
+        <div className="about">
+          <div className="about__text">
+            {profile.about.map((p) => (
+              <p key={p.slice(0, 24)}>{p}</p>
+            ))}
+          </div>
+          <aside className="card about__edu">
+            <p className="label">Education</p>
+            <h3>{education.school}</h3>
+            <p>{education.degree}</p>
+            <p className="muted">
+              {education.period} · {education.grade}
+            </p>
+          </aside>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function Experience({
+  jobs = experience,
+  id = 'experience',
+  title = 'Experience',
+  kicker = "Where I've worked and what I shipped.",
+  className = '',
+}) {
+  return (
+    <section className="section" id={id}>
+      <div className="container reveal">
+        <SectionHeading index="02" title={title} kicker={kicker} />
+        <ol className={`timeline ${className}`}>
+          {jobs.map((job) => (
+            <li className="timeline__item" key={job.company}>
+              <div className="timeline__meta">
+                <p className="timeline__period">{job.period}</p>
+                <p className="muted">{job.location}</p>
+              </div>
+              <article className="card timeline__card">
+                <header>
+                  <h3>{job.company}</h3>
+                  <p className="timeline__role">{job.role}</p>
+                </header>
+                <ul className="bullets">
+                  {job.points.map((pt) => (
+                    <li key={pt.slice(0, 32)}>{pt}</li>
+                  ))}
+                </ul>
+                <ul className="tags" aria-label="Technologies">
+                  {job.tags.map((t) => (
+                    <li key={t}>{t}</li>
+                  ))}
+                </ul>
+              </article>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  );
+}
+
+export function Projects() {
+  return (
+    <section className="section" id="projects">
+      <div className="container reveal">
+        <SectionHeading index="03" title="Projects" kicker="Things I've built outside work." />
+        <div className="projects">
+          {projects.map((p) => (
+            <article className="card project" key={p.name}>
+              <h3>{p.name}</h3>
+              <p>{p.description}</p>
+              <ul className="tags" aria-label="Technologies">
+                {p.tags.map((t) => (
+                  <li key={t}>{t}</li>
                 ))}
               </ul>
-              <p className="row__stack">{job.tags.join(' · ')}</p>
+              <div className="project__links">
+                {p.links.map((l) => (
+                  <a key={l.href} href={l.href} target="_blank" rel="noreferrer noopener">
+                    <FiGithub aria-hidden="true" /> {l.label} <FiArrowUpRight aria-hidden="true" />
+                  </a>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+        <a className="more-link" href={profile.github} target="_blank" rel="noreferrer noopener">
+          More on GitHub <FiArrowUpRight aria-hidden="true" />
+        </a>
+      </div>
+    </section>
+  );
+}
+
+export function Skills() {
+  return (
+    <section className="section" id="skills">
+      <div className="container reveal">
+        <SectionHeading index="04" title="Skills" />
+        <div className="skills">
+          {skills.map((g) => (
+            <div className="card skills__group" key={g.group}>
+              <p className="label">{g.group}</p>
+              <ul className="tags tags--lg">
+                {g.items.map((s) => (
+                  <li key={s}>{s}</li>
+                ))}
+              </ul>
             </div>
-          </li>
-        ))}
-        <li className="row">
-          <p className="row__date">{education.period}</p>
-          <div className="row__body">
-            <h3 className="row__title">
-              {education.school}
-              <span className="row__sub">{education.degree}</span>
-            </h3>
-            <p className="row__stack">{education.grade}</p>
-          </div>
-        </li>
-      </ol>
-    </Section>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
-function Projects() {
+export function Footer() {
   return (
-    <Section id="projects" title="Selected projects">
-      <ol className="work">
-        {projects.map((p, i) => (
-          <li key={p.name} className="work__item">
-            <a className="work__link" href={p.links[0].href} target="_blank" rel="noreferrer noopener">
-              <span className="work__num">{String(i + 1).padStart(2, '0')}</span>
-              <span className="work__name">{p.name}</span>
-              <FiArrowUpRight className="work__arrow" aria-hidden="true" />
+    <footer className="footer">
+      <div className="container footer__inner">
+        <p>© {new Date().getFullYear()} Alok Awasthi</p>
+        <ul className="socials socials--sm" aria-label="Profiles">
+          <li>
+            <a href={profile.github} target="_blank" rel="noreferrer noopener" aria-label="GitHub">
+              <FiGithub />
             </a>
-            <p className="work__desc">{p.description}</p>
-            <p className="work__meta">
-              <span>{p.tags.join(' · ')}</span>
-              {p.links.length > 1 && (
-                <span className="work__extra">
-                  {p.links.map((l) => (
-                    <a key={l.href} href={l.href} target="_blank" rel="noreferrer noopener">
-                      {l.label}
-                    </a>
-                  ))}
-                </span>
-              )}
-            </p>
           </li>
-        ))}
-      </ol>
-      <a className="more" href={profile.github} target="_blank" rel="noreferrer noopener">
-        Everything else is on GitHub <FiArrowUpRight aria-hidden="true" />
-      </a>
-    </Section>
+          <li>
+            <a href={profile.linkedin} target="_blank" rel="noreferrer noopener" aria-label="LinkedIn">
+              <FiLinkedin />
+            </a>
+          </li>
+          <li>
+            <a href={`mailto:${profile.email}`} aria-label="Email">
+              <FiMail />
+            </a>
+          </li>
+        </ul>
+      </div>
+    </footer>
   );
 }
 
-function Skills() {
+function ClassicSite() {
+  useReveal();
   return (
-    <Section id="skills" title="Toolkit">
-      <dl className="kit">
-        {skills.map((g) => (
-          <div key={g.group}>
-            <dt>{g.group}</dt>
-            <dd>{g.items.join(', ')}</dd>
-          </div>
-        ))}
-      </dl>
-    </Section>
-  );
-}
-
-export default function App() {
-  return (
-    <div className="shell">
-      <a className="skip" href="#main">
+    <>
+      <a className="skip-link" href="#about">
         Skip to content
       </a>
-      <Sidebar />
-      <main id="main" className="main">
+      <Nav />
+      <main>
+        <Hero />
         <About />
         <Experience />
         <Projects />
         <Skills />
         <Contact />
-        <footer className="foot">
-          <p>
-            Designed and built by Alok Awasthi in Bangalore. Set in Instrument Serif and Geist.
-          </p>
-          <p>© {new Date().getFullYear()}</p>
-        </footer>
       </main>
-    </div>
+      <Footer />
+    </>
   );
+}
+
+// The page-turning book needs room for each page to fit on screen; smaller
+// screens and reduced-motion users get the regular scrolling site.
+const BOOK_QUERY = '(min-width: 960px) and (min-height: 680px) and (prefers-reduced-motion: no-preference)';
+
+function useMedia(query) {
+  const [match, setMatch] = useState(() => window.matchMedia(query).matches);
+  useEffect(() => {
+    const mq = window.matchMedia(query);
+    const on = () => setMatch(mq.matches);
+    mq.addEventListener('change', on);
+    return () => mq.removeEventListener('change', on);
+  }, [query]);
+  return match;
+}
+
+export default function App() {
+  const book = useMedia(BOOK_QUERY);
+  return book ? <Book /> : <ClassicSite />;
 }
