@@ -17,12 +17,12 @@ function Resume() {
       <div className='cv__resume-summary'>
         <div className='cv__resume-summary_heading'>
           <h2>Summary</h2>
-          <a href={resume} download='resume.pdf'>
+          <a href={resume} download='Alok Awasthi Resume.pdf'>
             <Button name='DOWNLOAD CV' className='downloadCV' textColor='#ffffff' backgroundColor='#8a2be2' borderColor='#725AC1' boxShadowColor='#725AC1' hoverTextColor='#725AC1' hoverBoxShadowColor='#ffffff00'  />
           </a>
         </div>
         <div className='cv__resume-summary_description'>
-          <p>Dedicated to improving skills through hands-on learning and development work. Adept at a number of programming languages including JAVA, C++ and Python.  Well-organised and collaborative team player with strong communication and analytical abilities. </p>
+          <p>Senior software engineer with 5+ years of experience in Java, Spring Boot, Python, SQL and Oracle DB, building backend and data systems across healthcare, financial services and travel. At Oracle Health, I drive payer data platforms and GenAI features: an LLM-based payer deduplication process, a RAG pipeline that extracts prior-authorization rules from payer documents, and cross-team payer self-onboarding. Proven record of 3× throughput gains, 40% faster event processing, 30%+ faster onboarding and ~20% shorter test cycles. Experienced in owning cross-team delivery and mentoring developers.</p>
         </div>
       </div>
 
@@ -50,24 +50,63 @@ function Resume() {
 
       <div className='cv__resume-skills_language'>
         <h2>Skillset</h2>
+        <h3 className='cv__resume-skills_group'>Languages</h3>
         <ul className='cv__resume-skills_language-list'>
-          <li>JAVA</li>
-          <li>C++</li>
+          <li>Java</li>
           <li>Python</li>
-          <li>MongoDB</li>
           <li>SQL</li>
-          <li>DSA</li>
+          <li>C++</li>
+        </ul>
+
+        <h3 className='cv__resume-skills_group'>Backend</h3>
+        <ul className='cv__resume-skills_language-list'>
           <li>Spring Boot</li>
-          <li>Load Testing</li>
-          <li>JUnit5</li>
+          <li>Spring Data JPA</li>
+          <li>REST APIs</li>
+          <li>GraphQL</li>
           <li>Kafka</li>
-          <li>ReactJS</li>
-          <li>CSS</li>
+          <li>Asynchronous Processing</li>
+        </ul>
+
+        <h3 className='cv__resume-skills_group'>AI / GenAI</h3>
+        <ul className='cv__resume-skills_language-list'>
+          <li>RAG Pipelines</li>
+          <li>Embeddings & Vector Search</li>
+          <li>LLM-based Entity Resolution</li>
+          <li>LLM Evaluation (Human-in-the-Loop)</li>
+          <li>OCI Generative AI</li>
+        </ul>
+
+        <h3 className='cv__resume-skills_group'>Data</h3>
+        <ul className='cv__resume-skills_language-list'>
+          <li>Oracle DB</li>
+          <li>MongoDB</li>
+          <li>Data Modeling</li>
+          <li>ETL Migration & Validation</li>
+          <li>Oracle APEX</li>
+        </ul>
+
+        <h3 className='cv__resume-skills_group'>Cloud & DevOps</h3>
+        <ul className='cv__resume-skills_language-list'>
+          <li>OCI (Object Storage, IAM Identity Domains)</li>
+          <li>AWS S3</li>
+          <li>Jenkins</li>
+          <li>Docker</li>
+          <li>Kubernetes (basic)</li>
+          <li>Blue-Green Deployments</li>
+        </ul>
+
+        <h3 className='cv__resume-skills_group'>Testing</h3>
+        <ul className='cv__resume-skills_language-list'>
+          <li>JUnit</li>
+          <li>BDD/E2E</li>
+          <li>API Contract Testing</li>
+          <li>JMeter Load Testing</li>
         </ul>
 
         <h2>Language</h2>
         <ul className='cv__resume-skills_language-list'>
-          <li>Hindi (navtive)</li>
+          <li>Hindi (native)</li>
           <li>English</li>
         </ul>
       </div>

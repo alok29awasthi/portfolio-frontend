@@ -32,7 +32,7 @@ const Navbar = () => {
         <Link to='/'>
           <div className='cv__navbar-heading_links'>
             <h1 className='inline'>Alok Awasthi</h1>
-            <p className='inline'> / SOFTWARE DEVELOPER </p>
+            <p className='inline'> / SENIOR SOFTWARE ENGINEER </p>
           </div>
         </Link>
        </div>

@@ -3,9 +3,11 @@ import twitter from '../assets/twitter.png'
 import linkedin from '../assets/linkedin.png';
 import instagram from '../assets/instagram.png'
 
-export default {
+const images = {
   facebook,
   twitter,
   linkedin,
   instagram
 };
+
+export default images;

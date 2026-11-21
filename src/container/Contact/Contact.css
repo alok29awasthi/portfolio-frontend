@@ -34,6 +34,17 @@ form {
     font-size: 35px;
 }
 
+.cv__contact-direct {
+    margin-top: 2rem;
+    width: 50%;
+    text-align: center;
+    line-height: 26px;
+}
+
+.cv__contact-direct a {
+    color: blueviolet;
+}
+
 .cv__contact-form {
     flex-wrap: wrap;
     display: flex;
@@ -83,12 +94,6 @@ form {
     color: red;
 }
 
-.cv__contact-form_captcha {
-    display: flex;
-    align-items: center;
-    margin-bottom: 2rem;
-}
-
 .cv__contact-form_sent {
     margin-top: 1rem;
     margin-left: 0.5rem;
@@ -98,17 +103,11 @@ form {
     width: 100%;
 }
 
-.cv__contact-form_captcha-reset {
-    height: 20px;
-    outline: 5px;
-    margin: 0 1rem;
-}
-
-.cv__contact-form_captcha input {
-    width: 120px;
-}
-
 @media screen and (max-width:768px) {
+    .cv__contact-direct {
+        width: 80%;
+    }
+
     .cv__contact-form {
         padding: 3rem 1rem;
     }
@@ -119,18 +118,6 @@ form {
 
     .cv__contact-row_1-form_row {
         width: 100%;
-    }
-}
-
-@media screen and (max-width:700px) {
-    .cv__contact-form_captcha {
-        margin-left: 1rem;
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .cv__contact-form_captcha img {
-        margin-bottom: 1rem;
     }
 }
 

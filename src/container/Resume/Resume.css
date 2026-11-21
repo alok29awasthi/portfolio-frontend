@@ -193,3 +193,12 @@ p {
         align-self: flex-start;
     }
 }
+.cv__resume-skills_group {
+    font-size: 15px;
+    margin-top: 1.5rem;
+    color: blueviolet;
+}
+
+.cv__resume-skills_language-list li {
+    break-inside: avoid;
+}

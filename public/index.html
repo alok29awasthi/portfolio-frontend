@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
-      content="Web site created using create-react-app"
+      content="Alok Awasthi, Senior Software Engineer at Oracle Health. Java, Spring Boot, Python, Oracle DB and GenAI (RAG, LLM entity resolution)."
     />
     <link rel="icon" href="mypic.jpeg" type="image/x-icon" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/mypic.jpeg" />
@@ -25,11 +25,20 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>Portfolio</title>
+    <title>Alok Awasthi | Senior Software Engineer</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <!-- Static copy of the contact form so Netlify Forms can detect it at deploy time. -->
+    <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="firstName" />
+      <input type="text" name="lastName" />
+      <input type="email" name="email" />
+      <input type="text" name="subject" />
+      <textarea name="message"></textarea>
+      <input type="text" name="bot-field" />
+    </form>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
