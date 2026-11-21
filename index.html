@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Alok Awasthi | Senior Software Engineer</title>
+    <meta name="description" content="Alok Awasthi is a Senior Software Engineer at Oracle Health building backend, data and GenAI systems with Java, Spring Boot, Python and Oracle DB." />
+    <meta name="author" content="Alok Awasthi" />
+    <link rel="canonical" href="https://portfolio-awasthi.netlify.app/" />
+    <link rel="icon" href="/mypic.ico" />
+    <meta name="theme-color" content="#0b0b10" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#fafaf9" media="(prefers-color-scheme: light)" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Alok Awasthi | Senior Software Engineer" />
+    <meta property="og:description" content="Backend, data and GenAI systems. Oracle Health, ex-Morgan Stanley, ex-OYO." />
+    <meta property="og:url" content="https://portfolio-awasthi.netlify.app/" />
+    <meta property="og:image" content="https://portfolio-awasthi.netlify.app/og.jpg" />
+    <meta name="twitter:card" content="summary" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Alok Awasthi",
+        "jobTitle": "Senior Software Engineer",
+        "worksFor": { "@type": "Organization", "name": "Oracle Health" },
+        "alumniOf": "Vellore Institute of Technology",
+        "url": "https://portfolio-awasthi.netlify.app/",
+        "sameAs": [
+          "https://github.com/alok29awasthi",
+          "https://www.linkedin.com/in/alok-awasthi-93a862160"
+        ]
+      }
+    </script>
+
+    <!-- Apply the saved or system theme before first paint to avoid a flash. -->
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          if (!t) t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+          document.documentElement.dataset.theme = t;
+        } catch (e) {
+          document.documentElement.dataset.theme = 'dark';
+        }
+      })();
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- Static copy of the contact form so Netlify Forms detects it at deploy time. -->
+    <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <textarea name="message"></textarea>
+      <input type="text" name="bot-field" />
+    </form>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
