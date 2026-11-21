@@ -21,9 +21,9 @@ export const profile = {
 
 export const stats = [
   { value: '5+', label: 'years building production systems' },
+  { value: '~70%', label: 'less manual review with LLM deduplication' },
   { value: '3×', label: 'throughput on event processing' },
   { value: '40%', label: 'faster event handling (2s → 1.2s)' },
-  { value: '30%+', label: 'less effort to onboard new regimes' },
 ];
 
 export const experience = [
