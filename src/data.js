@@ -102,7 +102,7 @@ export const skills = [
   },
   {
     group: 'AI / GenAI',
-    items: ['RAG pipelines', 'Embeddings & vector search', 'LLM entity resolution', 'LLM evaluation (HITL)', 'OCI Generative AI'],
+    items: ['RAG pipelines', 'Embeddings & vector search', 'LLM evaluation', 'Entity resolution', 'OCI Generative AI'],
   },
   {
     group: 'Data',
