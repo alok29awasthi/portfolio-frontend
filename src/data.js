@@ -110,7 +110,7 @@ export const skills = [
   },
   {
     group: 'Cloud & DevOps',
-    items: ['OCI', 'AWS S3', 'Jenkins', 'Docker', 'Kubernetes (basic)', 'Blue-Green deployments'],
+    items: ['OCI', 'AWS S3', 'Jenkins', 'Docker', 'Kubernetes', 'Blue-Green deployments'],
   },
   { group: 'Testing', items: ['JUnit', 'BDD / E2E', 'API contract testing', 'JMeter load testing'] },
 ];
